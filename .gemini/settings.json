@@ -1,0 +1,6 @@
+{
+  "context": {
+    "fileName": ["GEMINI.md"],
+    "includeDirectories": [".agents/rules"]
+  }
+}
