@@ -1,6 +1,5 @@
 {
   "context": {
-    "fileName": ["GEMINI.md"],
-    "includeDirectories": [".agents/rules"]
+    "fileName": ["AGENTS.md", "GEMINI.md"]
   }
 }

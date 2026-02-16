@@ -2,8 +2,8 @@
 set -e
 
 # ai-config setup script
-# Usage: git clone ... /tmp/ai-config && sh /tmp/ai-config/setup-agents.sh --dir ~/my-project
-# Or:    sh setup-agents.sh [--claude] [--gemini] [--codex] [--dir <path>] [--uninstall]
+# Usage: curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh
+# Or:    sh setup-ai-config.sh [--claude] [--gemini] [--codex] [--dir <path>] [--uninstall]
 
 REPO_URL="https://github.com/kentanakae/ai-config.git"
 
@@ -19,7 +19,7 @@ ANY_AGENT=false
 
 show_help() {
   cat <<'HELP'
-Usage: setup-agents.sh [OPTIONS]
+Usage: setup-ai-config.sh [OPTIONS]
 
 Setup ai-config agent settings in a project directory.
 
@@ -36,10 +36,10 @@ No agent flags = setup all agents.
 Multiple flags can be combined (e.g. --claude --gemini).
 
 Examples:
-  sh setup-agents.sh --dir ~/my-project
-  sh setup-agents.sh --claude --dir ~/my-project
-  sh setup-agents.sh --uninstall --dir ~/my-project
-  sh setup-agents.sh --dry-run --dir ~/my-project
+  sh setup-ai-config.sh --dir ~/my-project
+  sh setup-ai-config.sh --claude --dir ~/my-project
+  sh setup-ai-config.sh --uninstall --dir ~/my-project
+  sh setup-ai-config.sh --dry-run --dir ~/my-project
 HELP
   exit 0
 }
@@ -73,7 +73,7 @@ while [ $# -gt 0 ]; do
       ;;
     *)
       echo "Unknown option: $1"
-      echo "Run 'setup-agents.sh --help' for usage information."
+      echo "Run 'setup-ai-config.sh --help' for usage information."
       exit 1
       ;;
   esac
@@ -109,9 +109,9 @@ select_yn() {
   _sy_prompt="$1"
   _sy_sel=1  # 0=Yes, 1=No (default: No)
 
-  # Non-interactive: default No
+  # Non-interactive: default Yes
   if [ ! -t 0 ]; then
-    return 1
+    return 0
   fi
 
   _sy_esc=$(printf '\033')
@@ -285,7 +285,6 @@ setup_codex() {
 
   echo "Setting up Codex CLI..."
   create_symlink "$dest/AGENTS.md" ".agents/rules/AGENTS.md"
-  copy_file "$src/AGENTS.override.md" "$dest/AGENTS.override.md"
   copy_dir "$src/.codex" "$dest/.codex"
 }
 
@@ -349,16 +348,7 @@ uninstall_codex() {
 
   echo "Uninstalling Codex CLI..."
   if [ -L "$dest/AGENTS.md" ]; then
-    if [ "$DO_DRY_RUN" = true ]; then
-      echo "  [dry-run] Would delete: AGENTS.md (symlink)"
-    else
-      rm "$dest/AGENTS.md"
-      echo "  Deleted: AGENTS.md (symlink)"
-      COUNT_DELETED=$((COUNT_DELETED + 1))
-    fi
-  fi
-  if [ -f "$dest/AGENTS.override.md" ]; then
-    delete_target "$dest/AGENTS.override.md" "AGENTS.override.md" "file"
+    delete_target "$dest/AGENTS.md" "AGENTS.md (symlink)" "file"
   fi
   if [ -d "$dest/.codex" ]; then
     delete_target "$dest/.codex" ".codex/" "dir"

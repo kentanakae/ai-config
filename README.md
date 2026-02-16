@@ -10,15 +10,15 @@ Claude Code, Gemini CLI, Codex CLIの設定を一元管理するリポジトリ�
 ```sh
 # プロジェクトディレクトリでcurlから実行
 cd ~/my-project
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-agents.sh | sh
+curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh
 
 # 特定のエージェントのみ
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-agents.sh | sh -s -- --claude
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-agents.sh | sh -s -- --gemini --codex
+curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --claude
+curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --gemini --codex
 
 # 設定を削除
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-agents.sh | sh -s -- --uninstall
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-agents.sh | sh -s -- --uninstall --claude
+curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --uninstall
+curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --uninstall --claude
 ```
 
 ### オプション
@@ -58,7 +58,6 @@ cloneしたリポジトリから実行した場合は自動的に `git pull` で
                                     # config.toml配置用
 
 AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlink）
-AGENTS.override.md                  # Codex固有オーバーライド
 GEMINI.md                           # Gemini固有設定
 ```
 
@@ -84,4 +83,4 @@ GEMINI.md                           # Gemini固有設定
 |---|---|---|
 | Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・設定 |
 | Gemini CLI | `GEMINI.md` | Gemini固有の指示・設定 |
-| Codex CLI | `AGENTS.override.md` | Codex固有のオーバーライド |
+| Codex CLI | `.codex/` | Codex固有の設定 |
