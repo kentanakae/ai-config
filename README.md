@@ -10,15 +10,15 @@ Claude Code, Gemini CLI, Codex CLIの設定を一元管理するリポジトリ�
 ```sh
 # プロジェクトディレクトリでcurlから実行
 cd ~/my-project
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)"
 
 # 特定のエージェントのみ
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --claude
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --gemini --codex
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --claude
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --gemini --codex
 
 # 設定を削除
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --uninstall
-curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh -s -- --uninstall --claude
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --uninstall
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --uninstall --claude
 ```
 
 ### オプション

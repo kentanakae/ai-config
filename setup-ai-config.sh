@@ -2,7 +2,7 @@
 set -e
 
 # ai-config setup script
-# Usage: curl -sL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh | sh
+# Usage: sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)"
 # Or:    sh setup-ai-config.sh [--claude] [--gemini] [--codex] [--dir <path>] [--uninstall]
 
 REPO_URL="https://github.com/kentanakae/ai-config.git"
