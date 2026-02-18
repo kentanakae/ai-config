@@ -400,14 +400,12 @@ fi
 # Determine source directory
 SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)"
 
-# Update to latest if running from a git repo
-if [ -d "$SCRIPT_DIR/.git" ]; then
-  echo "Updating ai-config..."
-  git -C "$SCRIPT_DIR" pull --quiet 2>/dev/null || true
-fi
-
-if [ -f "$SCRIPT_DIR/.agents/rules/AGENTS.md" ]; then
-  # Running from within the repo
+if [ "$(basename "$0")" = "setup-ai-config.sh" ] && [ -f "$SCRIPT_DIR/.agents/rules/AGENTS.md" ]; then
+  # Running directly from within the repo
+  if [ -d "$SCRIPT_DIR/.git" ]; then
+    echo "Updating ai-config..."
+    git -C "$SCRIPT_DIR" pull --quiet 2>/dev/null || true
+  fi
   SRC="$SCRIPT_DIR"
   CLEANUP_SRC=false
 else
