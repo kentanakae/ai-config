@@ -197,6 +197,11 @@ copy_file() {
 
   mkdir -p "$(dirname "$_cf_dest")"
 
+  # Skip if contents are identical
+  if [ -f "$_cf_dest" ] && [ ! -L "$_cf_dest" ] && cmp -s "$_cf_src" "$_cf_dest"; then
+    return
+  fi
+
   if confirm_overwrite "$_cf_dest"; then
     cp "$_cf_src" "$_cf_dest"
     echo "  Copied: $_cf_dest"
