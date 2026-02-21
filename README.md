@@ -51,6 +51,7 @@ cloneしたリポジトリから実行した場合は自動的に `git pull` で
   skills/   -> ../.agents/skills    # 共通スキル（symlink）
 
 .gemini/                            # Gemini CLI
+  GEMINI.md                         # Gemini固有設定
   settings.json                     # context.fileNameでAGENTS.md, GEMINI.mdを参照
   skills/   -> ../.agents/skills    # 共通スキル（symlink）
 
@@ -58,7 +59,6 @@ cloneしたリポジトリから実行した場合は自動的に `git pull` で
                                     # config.toml配置用
 
 AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlink）
-GEMINI.md                           # Gemini固有設定
 ```
 
 ## 共通ルールの読み込み経路
@@ -82,7 +82,7 @@ GEMINI.md                           # Gemini固有設定
 | エージェント | ファイル | 用途 |
 |---|---|---|
 | Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・委任ルール |
-| Gemini CLI | `GEMINI.md` | Gemini固有の指示・委任ルール |
+| Gemini CLI | `.gemini/GEMINI.md` | Gemini固有の指示・委任ルール |
 | Codex CLI | `.codex/AGENTS.md` | Codex固有の指示・委任ルール |
 
 ## Multi-AI 自動委任フレームワーク
@@ -115,7 +115,7 @@ GEMINI.md                           # Gemini固有設定
 | `.agents/rules/AGENTS.md` | 共通フレームワーク（役割定義・呼び出し方法・共通ルール） |
 | `.claude/CLAUDE.md` | Claude Code → Codex / Gemini への委任トリガー |
 | `.codex/AGENTS.md` | Codex CLI → Claude / Gemini への委任トリガー |
-| `GEMINI.md` | Gemini CLI → Claude / Codex への委任トリガー |
+| `.gemini/GEMINI.md` | Gemini CLI → Claude / Codex への委任トリガー |
 
 ### 委任の共通ルール
 

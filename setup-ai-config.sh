@@ -279,7 +279,6 @@ setup_gemini() {
   dest="$INSTALL_DIR"
 
   echo "Setting up Gemini CLI..."
-  copy_file "$src/GEMINI.md" "$dest/GEMINI.md"
   copy_dir "$src/.gemini" "$dest/.gemini"
   create_symlink "$dest/.gemini/skills" "../.agents/skills"
 }
@@ -340,9 +339,6 @@ uninstall_gemini() {
   dest="$INSTALL_DIR"
 
   echo "Uninstalling Gemini CLI..."
-  if [ -f "$dest/GEMINI.md" ]; then
-    delete_target "$dest/GEMINI.md" "GEMINI.md" "file"
-  fi
   if [ -d "$dest/.gemini" ] || [ -L "$dest/.gemini/skills" ]; then
     delete_target "$dest/.gemini" ".gemini/" "dir"
   fi

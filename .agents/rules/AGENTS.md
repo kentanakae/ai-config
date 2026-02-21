@@ -91,7 +91,7 @@
    c. 結果を受け取り、ユーザーに報告する
 4. 自分で実行する場合: そのまま進める
 
-> 各エージェントのカスタマイズ値は個別ファイル（CLAUDE.md, .codex/AGENTS.md, GEMINI.md）のワークフローセクションを参照。
+> 各エージェントのカスタマイズ値は個別ファイル（CLAUDE.md, .codex/AGENTS.md, .gemini/GEMINI.md）のワークフローセクションを参照。
 
 ## 共通完了チェックリスト
 
@@ -121,8 +121,8 @@
 | Claude → Gemini | C→G1〜G6 | 6 | .claude/CLAUDE.md |
 | Codex → Claude | X→C1〜C7 | 7 | .codex/AGENTS.md |
 | Codex → Gemini | X→G1〜G5 | 5 | .codex/AGENTS.md |
-| Gemini → Claude | G→C1〜C6 | 6 | GEMINI.md |
-| Gemini → Codex | G→X1〜X5 | 5 | GEMINI.md |
+| Gemini → Claude | G→C1〜C6 | 6 | .gemini/GEMINI.md |
+| Gemini → Codex | G→X1〜X5 | 5 | .gemini/GEMINI.md |
 
 ### 更新ルール
 
