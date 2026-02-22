@@ -81,42 +81,42 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 
 | エージェント | ファイル | 用途 |
 |---|---|---|
-| Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・委任ルール |
-| Gemini CLI | `.gemini/GEMINI.md` | Gemini固有の指示・委任ルール |
-| Codex CLI | `.codex/AGENTS.md` | Codex固有の指示・委任ルール |
+| Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・協働ルール |
+| Gemini CLI | `.gemini/GEMINI.md` | Gemini固有の指示・協働ルール |
+| Codex CLI | `.codex/AGENTS.md` | Codex固有の指示・協働ルール |
 
-## Multi-AI 自動委任フレームワーク
+## Multi-AI 協働フレームワーク
 
-3つのAI CLIツールが「指揮者・職人・参謀」として自動的にタスクを委任し合う。
+3つのAI CLIツールが「設計リード・実装リード・調査リード」として協働してタスクに取り組む。
 
 ```
 ユーザー
   │
-  ├─→ Claude Code（指揮者）を使用時
+  ├─→ Claude Code（設計リード）を使用時
   │     ├─ 自分: 対話・設計判断・Git・MCP・統合
-  │     ├─→ Codex: コード実装・テスト・修正・レビュー
-  │     └─→ Gemini: 調査・大規模分析・マルチモーダル
+  │     ├─⇄ Codex: コード実装・テスト・修正・レビュー
+  │     └─⇄ Gemini: 調査・大規模分析・マルチモーダル
   │
-  ├─→ Codex CLI（職人）を使用時
+  ├─→ Codex CLI（実装リード）を使用時
   │     ├─ 自分: コード実装・テスト・定型PR・CI/CD
-  │     ├─→ Claude: 設計判断・意図解釈・Git複雑操作・MCP
-  │     └─→ Gemini: 調査・大規模分析・マルチモーダル
+  │     ├─⇄ Claude: 設計判断・意図解釈・Git複雑操作・MCP
+  │     └─⇄ Gemini: 調査・大規模分析・マルチモーダル
   │
-  └─→ Gemini CLI（参謀）を使用時
+  └─→ Gemini CLI（調査リード）を使用時
         ├─ 自分: 大規模分析・調査・マルチモーダル・設計壁打ち
-        ├─→ Claude: 設計判断・タスク統括・Git・MCP
-        └─→ Codex: コード実装・テスト・レビュー・CI/CD
+        ├─⇄ Claude: 設計判断・タスク統括・Git・MCP
+        └─⇄ Codex: コード実装・テスト・レビュー・CI/CD
 ```
 
 ### ルールの配置
 
 | ファイル | 内容 |
 |---|---|
-| `.agents/rules/AGENTS.md` | 共通フレームワーク（役割定義・呼び出し方法・共通ルール） |
-| `.claude/CLAUDE.md` | Claude Code → Codex / Gemini への委任トリガー |
-| `.codex/AGENTS.md` | Codex CLI → Claude / Gemini への委任トリガー |
-| `.gemini/GEMINI.md` | Gemini CLI → Claude / Codex への委任トリガー |
+| `.agents/rules/AGENTS.md` | 共通フレームワーク（役割定義・呼び出し方法・協働ルール） |
+| `.claude/CLAUDE.md` | Claude Code の得意分野プロファイル・協働パターン |
+| `.codex/AGENTS.md` | Codex CLI の得意分野プロファイル・協働パターン |
+| `.gemini/GEMINI.md` | Gemini CLI の得意分野プロファイル・協働パターン |
 
-### 委任の共通ルール
+### 協働ルール
 
-詳細は `.agents/rules/AGENTS.md` の「共通ルール（全ツール必須）」を参照。
+詳細は `.agents/rules/AGENTS.md` の「協働ルール（全ツール必須）」を参照。
