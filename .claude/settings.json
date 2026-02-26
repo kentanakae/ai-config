@@ -139,6 +139,14 @@
   "showTurnDuration": false,
   "fastMode": false,
   "outputStyle": "knt",
+  "companyAnnouncements": [
+    "🧩 One by one. No rush.",
+    "🌱 Not perfect. Just start.",
+    "📝 Write it down. Keep the spark.",
+    "👀 What can you do? Right now.",
+    "✨ See the win. Then begin.",
+    "🎸 Break the rules. Find your own."
+  ],
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
