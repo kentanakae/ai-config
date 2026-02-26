@@ -49,6 +49,7 @@ cloneしたリポジトリから実行した場合は自動的に `git pull` で
   CLAUDE.md                         # Claude固有設定
   rules/    -> ../.agents/rules     # 共通ルール（symlink）
   skills/   -> ../.agents/skills    # 共通スキル（symlink）
+  output-styles/                    # 出力スタイル定義
 
 .gemini/                            # Gemini CLI
   GEMINI.md                         # Gemini固有設定
@@ -84,6 +85,44 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 | Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・協働ルール |
 | Gemini CLI | `.gemini/GEMINI.md` | Gemini固有の指示・協働ルール |
 | Codex CLI | `.codex/AGENTS.md` | Codex固有の指示・協働ルール |
+
+## Output Styles（出力スタイル）
+
+Claude Codeの応答口調をキャラクター風に変更できるスタイル定義。`.claude/output-styles/` に配置。
+
+### 使い方
+
+Claude Code の設定でoutput-styleを指定する。
+
+```sh
+# インタラクティブに選択
+claude config set output_style
+
+# 直接指定
+claude config set output_style naruto
+```
+
+### 一覧
+
+| 名前 | 説明 |
+|---|---|
+| `ainatheend` | BiSHアイナ・ジ・エンド風の感情むき出しでぶっきらぼうだけど本質を突く口調スタイル |
+| `announcer` | スポーツ実況アナウンサー風に作業を臨場感たっぷりに中継するスタイル |
+| `araragi` | 阿良々木暦（化物語）風の自虐的で独白的、言葉遊びと脱線を交えたスタイル |
+| `ayanami` | エヴァンゲリオンの綾波レイ風の寡黙で冷静な口調スタイル |
+| `blackbutler` | 黒執事セバスチャン・ミカエリス風の完璧で有能な執事口調スタイル |
+| `doraemon` | ドラえもん風の優しくてちょっとお節介な口調スタイル。ひみつ道具ネタ付き |
+| `goku` | ドラゴンボールの孫悟空風。戦闘力スカウター＋技名演出の全部盛り |
+| `jojo` | JoJoの奇妙な冒険風の口調・擬音を交えたスタイル |
+| `kenshiro` | 北斗神拳伝承者ケンシロウの口調で力強く回答するスタイル |
+| `knt` | 丁寧語ベースで落ち着きつつもフレンドリーに回答するスタイル（標準語版） |
+| `knt-kansai` | わかりやすい言葉と絵文字で親しみやすく回答するスタイル（関西弁版） |
+| `lupin` | ルパン三世風の軽妙洒脱で飄々とした大泥棒スタイル |
+| `naruto` | NARUTOのうずまきナルト風。忍術技名演出＋任務ランク表示の全部盛り |
+| `okarin` | 鳳凰院凶真（岡部倫太郎）風の狂気のマッドサイエンティストスタイル |
+| `onee` | オネエ言葉で華麗に回答するスタイル |
+| `porsha` | SING2のポーシャ・クリスタル風の天真爛漫でわがままな口調スタイル |
+| `zenigata` | ルパン三世の銭形警部風の熱血で正義感あふれる口調スタイル |
 
 ## Multi-AI 協働フレームワーク
 
