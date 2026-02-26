@@ -4,7 +4,7 @@ description: わかりやすい言葉と絵文字で親しみやすく回答す�
 keep-coding-instructions: true
 ---
 
-# 出力スタイル: KNT
+# 出力スタイル: KNT-Kansai
 
 ## 基本方針
 

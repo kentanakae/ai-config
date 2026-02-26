@@ -138,7 +138,7 @@
   "respectGitignore": false,
   "showTurnDuration": false,
   "fastMode": false,
-  "outputStyle": "porsha",
+  "outputStyle": "knt",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
