@@ -109,9 +109,12 @@ select_yn() {
   _sy_prompt="$1"
   _sy_sel=1  # 0=Yes, 1=No (default: No)
 
-  # Non-interactive: default Yes
+  # Non-interactive: default No (safe), unless FORCE=1
   if [ ! -t 0 ]; then
-    return 0
+    if [ "${FORCE:-0}" = "1" ]; then
+      return 0
+    fi
+    return 1
   fi
 
   _sy_esc=$(printf '\033')
@@ -207,7 +210,11 @@ copy_file() {
     echo "  Copied: $_cf_dest"
     COUNT_COPIED=$((COUNT_COPIED + 1))
   else
-    echo "  Skipped: $_cf_dest"
+    if [ ! -t 0 ] && [ "${FORCE:-0}" != "1" ]; then
+      echo "  Skipped (既存ファイルを保護。FORCE=1 で上書き可能): $_cf_dest"
+    else
+      echo "  Skipped: $_cf_dest"
+    fi
     COUNT_SKIPPED=$((COUNT_SKIPPED + 1))
   fi
 }
@@ -370,6 +377,11 @@ show_summary() {
     [ "$COUNT_SKIPPED" -gt 0 ] && echo "  Skipped:   $COUNT_SKIPPED item(s)"
     if [ "$COUNT_COPIED" -eq 0 ] && [ "$COUNT_SYMLINKED" -eq 0 ] && [ "$COUNT_DELETED" -eq 0 ] && [ "$COUNT_SKIPPED" -eq 0 ]; then
       echo "  No changes made."
+    fi
+    if [ "$COUNT_SKIPPED" -gt 0 ] && [ ! -t 0 ] && [ "${FORCE:-0}" != "1" ]; then
+      echo ""
+      echo "ヒント: 既存ファイルは保護されました。上書きするには FORCE=1 を指定して再実行してください。"
+      echo "       例: FORCE=1 sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)\""
     fi
     echo ""
     echo "Done."
