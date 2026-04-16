@@ -34,9 +34,23 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/
 | `--help` | ヘルプを表示 |
 | 引数なし | 全エージェントの設定をセットアップ |
 
-複数のエージェントを指定可能（例: `--claude --gemini`）。
-既存ファイルがある場合は矢印キーで選択できる上書き確認プロンプトを表示する。symlinkは毎回再作成する。
+複数のエージェントを指定可能（例: `--claude --gemini`）。symlinkは毎回再作成する。
 cloneしたリポジトリから実行した場合は自動的に `git pull` で最新版に更新される。
+
+### 既存ファイルの上書き挙動
+
+| 実行方法 | 既存ファイルの扱い |
+|---|---|
+| 直接実行（対話） | 矢印キーで上書き確認、デフォルト `No` |
+| パイプ実行（`curl ... \| sh`） | 既存ファイルを保護してスキップ |
+| パイプ実行 + `FORCE=1` | 確認なしで上書き |
+
+中身が完全に同一のファイルは確認なしで素通り（差分なしのため）。
+
+```sh
+# 既存ファイルを上書きしたい場合
+FORCE=1 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)"
+```
 
 ## ディレクトリ構造
 
@@ -80,11 +94,13 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 
 ## 固有設定
 
-| エージェント | ファイル | 用途 |
-|---|---|---|
-| Claude Code | `.claude/CLAUDE.md` | Claude固有の指示・協働ルール |
-| Gemini CLI | `.gemini/GEMINI.md` | Gemini固有の指示・協働ルール |
-| Codex CLI | `.codex/AGENTS.md` | Codex固有の指示・協働ルール |
+ツール固有の補正が必要になったら以下に記述する（初期状態は空）。
+
+| エージェント | ファイル |
+|---|---|
+| Claude Code | `.claude/CLAUDE.md` |
+| Gemini CLI | `.gemini/GEMINI.md` |
+| Codex CLI | `.codex/AGENTS.md` |
 
 ## Output Styles（出力スタイル）
 
@@ -124,38 +140,3 @@ claude config set output_style naruto
 | `porsha` | SING2のポーシャ・クリスタル風の天真爛漫でわがままな口調スタイル |
 | `zenigata` | ルパン三世の銭形警部風の熱血で正義感あふれる口調スタイル |
 
-## Multi-AI 協働フレームワーク
-
-3つのAI CLIツールが「設計リード・実装リード・調査リード」として協働してタスクに取り組む。
-
-```
-ユーザー
-  │
-  ├─→ Claude Code（設計リード）を使用時
-  │     ├─ 自分: 対話・設計判断・Git・MCP・統合
-  │     ├─⇄ Codex: コード実装・テスト・修正・レビュー
-  │     └─⇄ Gemini: 調査・大規模分析・マルチモーダル
-  │
-  ├─→ Codex CLI（実装リード）を使用時
-  │     ├─ 自分: コード実装・テスト・定型PR・CI/CD
-  │     ├─⇄ Claude: 設計判断・意図解釈・Git複雑操作・MCP
-  │     └─⇄ Gemini: 調査・大規模分析・マルチモーダル
-  │
-  └─→ Gemini CLI（調査リード）を使用時
-        ├─ 自分: 大規模分析・調査・マルチモーダル・設計壁打ち
-        ├─⇄ Claude: 設計判断・タスク統括・Git・MCP
-        └─⇄ Codex: コード実装・テスト・レビュー・CI/CD
-```
-
-### ルールの配置
-
-| ファイル | 内容 |
-|---|---|
-| `.agents/rules/AGENTS.md` | 共通フレームワーク（役割定義・呼び出し方法・協働ルール） |
-| `.claude/CLAUDE.md` | Claude Code の得意分野プロファイル・協働パターン |
-| `.codex/AGENTS.md` | Codex CLI の得意分野プロファイル・協働パターン |
-| `.gemini/GEMINI.md` | Gemini CLI の得意分野プロファイル・協働パターン |
-
-### 協働ルール
-
-詳細は `.agents/rules/AGENTS.md` の「協働ルール（全ツール必須）」を参照。
