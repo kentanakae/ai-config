@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "sandbox": {
+    "network": {
+      "allowedDomains": [
+      ]
+    },
+    "filesystem": {
+      "allowWrite": [
+        "."
+      ],
+      "allowRead": [
+        "."
+      ]
+    },
+    "excludedCommands": [
+      "swift:*",
+      "xcodebuild:*",
+      "xcrun:*"
+    ]
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
+}
