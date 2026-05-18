@@ -277,9 +277,7 @@
       "allowLocalBinding": false
     },
     "filesystem": {
-      "allowWrite": [
-        "~/.claude/.last-setup-check"
-      ],
+      "allowWrite": [],
       "denyWrite": [],
       "denyRead": [
         "~/"
