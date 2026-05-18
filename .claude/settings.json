@@ -284,6 +284,8 @@
       ],
       "allowRead": [
         "~/.claude",
+        "~/.codex",
+        "~/.gemini",
         "~/.local",
         "~/.gitconfig",
         "~/.nvm"
