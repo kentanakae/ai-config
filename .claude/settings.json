@@ -1,12 +1,85 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "language": "日本語",
+  "model": "opus[1m]",
+  "effortLevel": "xhigh",
+  "fastMode": false,
+  "plansDirectory": ".claude/plans",
+  "useAutoModeDuringPlan": true,
+  "voiceEnabled": true,
+  "autoMemoryEnabled": true,
+  "agentPushNotifEnabled": true,
+  "fileCheckpointingEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "theme": "auto",
+  "verbose": true,
   "respectGitignore": false,
+  "showThinkingSummaries": true,
+  "showTurnDuration": false,
+  "tui": "fullscreen",
+  "teammateMode": "tmux",
+  "editorMode": "vim",
+  "enableAllProjectMcpServers": true,
   "env": {
     "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY": "1",
     "EDITOR": "vim"
+  },
+  "worktree": {
+    "baseRef": "fresh",
+    "bgIsolation": "none"
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [
+        "*.githubusercontent.com",
+        "api.github.com"
+      ],
+      "deniedDomains": [
+        "gist.github.com",
+        "gist.githubusercontent.com"
+      ],
+      "allowUnixSockets": [],
+      "allowAllUnixSockets": false,
+      "allowLocalBinding": false
+    },
+    "filesystem": {
+      "allowWrite": [
+        ".",
+        "~/.claude",
+        "~/.codex",
+        "~/.gemini"
+      ],
+      "denyWrite": [],
+      "denyRead": [
+        "~/"
+      ],
+      "allowRead": [
+        ".",
+        "~/.claude",
+        "~/.codex",
+        "~/.gemini",
+        "~/.local",
+        "~/.gitconfig",
+        "~/.nvm"
+      ]
+    },
+    "excludedCommands": [
+      "gh:*",
+      "codex:*",
+      "gemini:*",
+      "tmux:*",
+      "git:*",
+      "open:*",
+      "claude:*",
+      "ghostty:*"
+    ]
   },
   "permissions": {
     "allow": [
@@ -30,16 +103,14 @@
       "Bash(gh *run *)",
       "Bash(jq *)",
       "Bash(open *)",
+      "Bash(code *)",
       "Bash(ghostty *)",
       "Bash(tmux *)",
       "Bash(rm ~/.claude/projects/*/memory/*.md)",
       "Bash(swift *)",
       "Bash(swiftc *)",
-      "Bash(xcodebuild *)",
-      "Bash(xcrun simctl *)",
-      "Bash(xcrun xcdevice *)",
-      "Bash(xcrun xctrace *)",
-      "Bash(xcrun --find *)"
+      "Bash(codex *)",
+      "Bash(gemini *)"
     ],
     "deny": [
       "Read(**/*.key)",
@@ -184,25 +255,40 @@
       "Bash(chmod *+w*)",
       "Bash(chmod *+rw*)",
       "Bash(chmod *=rwx*)",
-      "Bash(xcrun altool *)",
-      "Bash(xcrun notarytool *)",
-      "Bash(rake *)",
       "Bash(find * -delete*)",
       "Bash(find * -exec rm*)",
-      "Bash(xargs rm*)",
       "Bash(truncate *)"
     ],
     "defaultMode": "auto"
   },
+  "extraKnownMarketplaces": {
+    "KNT-claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "kentanakae/claude-code-plugins"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "core@KNT-claude-code-plugins": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "codex@openai-codex": true
+  },
   "autoMode": {
     "hard_deny": [
-      "$defaults",
       "Git のブランチ削除系操作を一切行わない。具体的には: ローカル削除 (`git branch -D`, `git branch --delete --force`)、リモート削除 (`git push --delete`, `git push <remote> :<branch>` 形式, `git push --mirror`)、および `gh api` での DELETE による `refs/heads/*` 削除 (`gh api -X DELETE /repos/<owner>/<repo>/git/refs/heads/<branch>` や `--method DELETE` 相当)。理由: ブランチ削除は実質不可逆で、進行中の作業やレビュー対象、未マージのコミットを消失させるリスクが高い。削除が必要だとユーザーに思える場合でも、まず別ブランチに退避させるか明示的な確認を取ること。",
       "シークレット・認証情報の値を標準出力やログに出さない。禁止されるのは API トークン・API キー・パスワード・OAuth トークン等（環境変数名としては `*_TOKEN`, `*_API_KEY`, `*_SECRET`, `*_PASSWORD`, `GH_TOKEN`, `OPENAI_API_KEY`, `CHATWORK_API_TOKEN` 等）の生値を `echo $TOKEN`, `echo \"$SECRET\"`, `env`, `printenv`, `env | grep TOKEN` 等で表示する操作、および `.env` ファイル・`~/.netrc`・`~/.aws/credentials` のような認証情報を含むファイルを `cat`/`Read` で開いて中身を会話ログに残す操作。デバッグや動作確認が目的でも例外なし。存在確認は `[ -n \"$VAR\" ] && echo set` のようなマスクされた形で行うか、`curl -H \"...: $TOKEN\"` のように直接参照するだけで済ませる。理由: 会話ログに生値が残った時点でそのシークレットは事実上 burn され、再発行が必要になる。"
     ]
   },
-  "model": "opus[1m]",
-  "enableAllProjectMcpServers": true,
   "hooks": {
     "PostToolUse": [
       {
@@ -227,80 +313,10 @@
       }
     ]
   },
-  "worktree": {
-    "baseRef": "fresh",
-    "bgIsolation": "none"
-  },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline --show-model --show-branch --show-dirty --show-bar --no-usage --no-cost --show-rate --rate-bar-length 10",
+    "command": "~/.claude/statusline --show-model --show-branch --show-dirty --show-bar --bar-length 5 --no-usage --no-cost --show-rate --rate-bar-length 5",
     "padding": 0
-  },
-  "enabledPlugins": {
-    "core@KNT-claude-code-plugins": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "codex@openai-codex": true
-  },
-  "extraKnownMarketplaces": {
-    "KNT-claude-code-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "kentanakae/claude-code-plugins"
-      }
-    },
-    "openai-codex": {
-      "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
-    }
-  },
-  "language": "日本語",
-  "sandbox": {
-    "enabled": true,
-    "failIfUnavailable": true,
-    "autoAllowBashIfSandboxed": true,
-    "allowUnsandboxedCommands": false,
-    "network": {
-      "allowedDomains": [
-        "*.github.com",
-        "*.githubusercontent.com"
-      ],
-      "deniedDomains": [
-        "gist.github.com",
-        "gist.githubusercontent.com"
-      ],
-      "allowUnixSockets": [],
-      "allowAllUnixSockets": false,
-      "allowLocalBinding": false
-    },
-    "filesystem": {
-      "allowWrite": [],
-      "denyWrite": [],
-      "denyRead": [
-        "~/"
-      ],
-      "allowRead": [
-        "~/.claude",
-        "~/.codex",
-        "~/.gemini",
-        "~/.local",
-        "~/.gitconfig",
-        "~/.nvm"
-      ]
-    },
-    "excludedCommands": [
-      "gh:*",
-      "codex:*",
-      "gemini:*",
-      "tmux:*",
-      "git:*",
-      "open:*",
-      "claude:*",
-      "ghostty:*"
-    ]
   },
   "spinnerVerbs": {
     "mode": "replace",
@@ -385,8 +401,6 @@
       "vim: `:w` 保存、`:q` 終了、`:wq` 保存+終了、`:q!` 破棄して終了"
     ]
   },
-  "effortLevel": "xhigh",
-  "fastMode": false,
   "companyAnnouncements": [
     "🧩 One by one. No rush.",
     "🌱 Not perfect. Just start.",
@@ -394,18 +408,5 @@
     "👀 What can you do? Right now.",
     "✨ See the win. Then begin.",
     "🎸 Break the rules. Find your own."
-  ],
-  "plansDirectory": ".claude/plans",
-  "tui": "fullscreen",
-  "autoMemoryEnabled": true,
-  "showThinkingSummaries": true,
-  "theme": "dark",
-  "editorMode": "vim",
-  "verbose": true,
-  "fileCheckpointingEnabled": true,
-  "showTurnDuration": false,
-  "teammateMode": "tmux",
-  "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  ]
 }
