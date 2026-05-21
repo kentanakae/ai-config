@@ -1,25 +1,29 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "sandbox": {
-    "network": {
-      "allowedDomains": [
-      ]
-    },
-    "filesystem": {
-      "allowWrite": [
-        "."
-      ],
-      "allowRead": [
-        "."
-      ]
-    },
     "excludedCommands": [
       "swift:*",
       "xcodebuild:*",
       "xcrun:*"
     ]
   },
+  "permissions": {
+    "allow": [
+      "Bash(swift *)",
+      "Bash(swiftc *)",
+      "Bash(xcodebuild *)",
+      "Bash(xcrun simctl *)",
+      "Bash(xcrun xcdevice *)",
+      "Bash(xcrun xctrace *)",
+      "Bash(xcrun --find *)"
+    ],
+    "ask": [
+      "Bash(xcrun altool *)",
+      "Bash(xcrun notarytool *)",
+      "Bash(xargs rm*)"
+    ]
+  },
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
+    "apple-dev@KNT-claude-code-plugins": true
   }
 }
