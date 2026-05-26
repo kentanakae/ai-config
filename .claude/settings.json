@@ -301,8 +301,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline --show-model --show-branch --show-dirty --show-bar --bar-length 5 --no-usage --no-cost --show-rate --rate-bar-length 5",
-    "padding": 0
+    "command": "~/.claude/statusline --show-model --show-branch --show-dirty --no-bar --no-usage --no-cost --no-rate"
   },
   "spinnerVerbs": {
     "mode": "replace",
