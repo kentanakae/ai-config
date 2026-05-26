@@ -52,9 +52,7 @@
     "filesystem": {
       "allowWrite": [
         ".",
-        "~/.claude",
-        "~/.codex",
-        "~/.gemini"
+        "~/.claude"
       ],
       "denyWrite": [],
       "denyRead": [
@@ -63,8 +61,6 @@
       "allowRead": [
         ".",
         "~/.claude",
-        "~/.codex",
-        "~/.gemini",
         "~/.local",
         "~/.gitconfig",
         "~/.nvm"
@@ -73,11 +69,9 @@
     "excludedCommands": [
       "gh:*",
       "codex:*",
-      "gemini:*",
       "tmux:*",
       "git:*",
       "open:*",
-      "claude:*",
       "ghostty:*"
     ]
   },
@@ -109,8 +103,7 @@
       "Bash(rm ~/.claude/projects/*/memory/*.md)",
       "Bash(swift *)",
       "Bash(swiftc *)",
-      "Bash(codex *)",
-      "Bash(gemini *)"
+      "Bash(codex *)"
     ],
     "deny": [
       "Read(**/*.key)",
@@ -267,12 +260,6 @@
         "source": "github",
         "repo": "kentanakae/claude-code-plugins"
       }
-    },
-    "openai-codex": {
-      "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
     }
   },
   "enabledPlugins": {
@@ -280,8 +267,7 @@
     "claude-code-setup@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
-    "codex@openai-codex": true
+    "swift-lsp@claude-plugins-official": true
   },
   "autoMode": {
     "hard_deny": [
