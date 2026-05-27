@@ -69,6 +69,7 @@
     "excludedCommands": [
       "gh:*",
       "codex:*",
+      "agy:*",
       "tmux:*",
       "git:*",
       "open:*",
