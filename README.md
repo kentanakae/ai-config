@@ -1,6 +1,6 @@
 # ai-config
 
-Claude Code, Gemini CLI, Codex CLIの設定を一元管理するリポジトリ。
+Claude Code, Codex CLIの設定を一元管理するリポジトリ。
 共通化できる設定はシンボリックリンクや参照設定で共有し、各エージェント固有の設定は個別に管理する。
 
 ## セットアップ
@@ -14,7 +14,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/
 
 # 特定のエージェントのみ
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --claude
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --gemini --codex
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --codex
 
 # 設定を削除
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/setup-ai-config.sh)" -- --uninstall
@@ -26,7 +26,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/
 | オプション | 説明 |
 |---|---|
 | `--claude` | Claude Codeの設定のみ |
-| `--gemini` | Gemini CLIの設定のみ |
 | `--codex` | Codex CLIの設定のみ |
 | `--dir <path>` | インストール先を指定（デフォルト: カレントディレクトリ） |
 | `--uninstall` | 設定を削除 |
@@ -34,7 +33,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-config/main/
 | `--help` | ヘルプを表示 |
 | 引数なし | 全エージェントの設定をセットアップ |
 
-複数のエージェントを指定可能（例: `--claude --gemini`）。symlinkは毎回再作成する。
+複数のエージェントを指定可能（例: `--claude --codex`）。symlinkは毎回再作成する。
 cloneしたリポジトリから実行した場合は自動的に `git pull` で最新版に更新される。
 
 ### 既存ファイルの上書き挙動
@@ -61,14 +60,12 @@ FORCE=1 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kentanakae/ai-conf
 
 .claude/                            # Claude Code
   CLAUDE.md                         # Claude固有設定
+  settings.json                     # ユーザー設定（sandbox, hooks, permissions, plugins等）
   rules/    -> ../.agents/rules     # 共通ルール（symlink）
   skills/   -> ../.agents/skills    # 共通スキル（symlink）
   output-styles/                    # 出力スタイル定義
-
-.gemini/                            # Gemini CLI
-  GEMINI.md                         # Gemini固有設定
-  settings.json                     # context.fileNameでAGENTS.md, GEMINI.mdを参照
-  skills/   -> ../.agents/skills    # 共通スキル（symlink）
+  project-setting-jsons/            # プロジェクト種別ごとのsettings.jsonテンプレ
+    apple-dev/                      # Apple（Xcode/Swift）開発向け
 
 .codex/                             # Codex CLI
                                     # config.toml配置用
@@ -81,7 +78,6 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 | エージェント | 経路 |
 |---|---|
 | Claude Code | `.claude/rules/` symlinkで `.agents/rules/` を参照 |
-| Gemini CLI | `.gemini/settings.json` の `context.fileName` で `AGENTS.md`, `GEMINI.md` を参照 |
 | Codex CLI | ルートの `AGENTS.md` symlinkで `.agents/rules/AGENTS.md` を参照 |
 
 ## 共通スキルの読み込み経路
@@ -89,7 +85,6 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 | エージェント | 経路 |
 |---|---|
 | Claude Code | `.claude/skills/` symlinkで `.agents/skills/` を参照 |
-| Gemini CLI | `.gemini/skills/` symlinkで `.agents/skills/` を参照 |
 | Codex CLI | `.agents/skills/` を直接参照（Codexの正規パス） |
 
 ## 固有設定
@@ -99,7 +94,6 @@ AGENTS.md   -> .agents/rules/AGENTS.md  # Codexが読む共通ルール（symlin
 | エージェント | ファイル |
 |---|---|
 | Claude Code | `.claude/CLAUDE.md` |
-| Gemini CLI | `.gemini/GEMINI.md` |
 | Codex CLI | `.codex/AGENTS.md` |
 
 ## Output Styles（出力スタイル）
